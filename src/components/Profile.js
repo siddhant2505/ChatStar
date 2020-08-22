@@ -67,7 +67,7 @@ const Profile = () => {
           alignItems="center"
           borderRadius="20px"
         >
-          <InputGroup m="auto" h="100%" w="90%">
+          <InputGroup m="auto" h="100%" w="90%" justify='center'>
             <InputLeftElement
               children={<Icon name="search" color="gray.300" />}
             />
@@ -78,7 +78,7 @@ const Profile = () => {
               mt="6px"
               border="none"
               borderRadius="20px"
-              placeholder="Start a new Chat"
+              placeholder="Search..."
               size="sm"
             />
           </InputGroup>

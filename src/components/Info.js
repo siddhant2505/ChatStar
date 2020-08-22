@@ -18,7 +18,7 @@ const Info = ({ handleFlex }) => {
           alignItems="center"
           justifyContent="center"
           align="center"
-          bg="blue.500"
+          bg="green.400"
         >
           <Flex flex={1}>
             <ClearSharpIcon

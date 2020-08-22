@@ -40,7 +40,7 @@ const Home = ({ message }) => {
       <Flex
         h="93vh"
         flex={flexHead.flex2}
-        bg="blue.500"
+        bg="green.500"
         isAnimated
         style={{ transition: "all 0.2s linear" }}
       >

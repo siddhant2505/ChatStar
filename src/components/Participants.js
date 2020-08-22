@@ -7,14 +7,14 @@ const Participants = () => {
       <Flex
         position="relative"
         w="100%"
-        h="4vw"
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
         bg="white"
         marginY="5px"
+        px={3}
       >
-        <Flex h="4vw" flex={3}>
+        <Flex  flex={3}>
           <div style={{ margin: "auto", clipPath: "circle(45%)" }}>
             <img
               //my="auto"
@@ -27,7 +27,6 @@ const Participants = () => {
           </div>
         </Flex>
         <Flex
-          h="4vw"
           flex={10}
           bg="white"
           overflow="hidden"
