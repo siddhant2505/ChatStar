@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { SimpleGrid, Grid, Flex, Text, Box } from "@chakra-ui/core";
+import { SimpleGrid, Grid, Flex, Text, Box, Image } from "@chakra-ui/core";
 import Chat from "./Chat";
 import Profile from "./Profile";
+import chatHome from "../assets/chat-home.PNG";
 
 import Info from "./Info";
 
-const Home = ({ message }) => {
-  const [flexHead, setFlexHead] = useState({ flex1: 7, flex2: 0, flexSub: 6 });
+const Home = ({ message, rooms, users }) => {
+  const [activeRoom, setActiveRoom] = useState(null);
 
+  const [flexHead, setFlexHead] = useState({ flex1: 7, flex2: 0, flexSub: 6 });
+  const handleActiveRoom = (room) => {
+    setActiveRoom(room);
+  };
   const handleFlex = () => {
     setFlexHead({ flex1: 4.5, flex2: 2.5, flexSub: 4 });
   };
@@ -23,19 +28,28 @@ const Home = ({ message }) => {
       align="center"
     >
       <Flex flex={3} height="93vh" bg="Green">
-        <Profile />
+        <Profile rooms={rooms} handleActiveRoom={handleActiveRoom} />
       </Flex>
       <Flex
         flex={flexHead.flex1}
         style={{ transition: "width 5s linear" }}
         height="93vh"
-        bg="Green"
+        bg="gray.50"
       >
-        <Chat
-          messageChat={message}
-          handleFlex={handleFlex}
-          flexHead={flexHead}
-        />
+        {!activeRoom ? (
+          <>
+            {/* <Flex h="19vh" w="100%" bg="gray.100" /> */}
+            <Image src={chatHome} width="100%" height="74vh" />
+          </>
+        ) : (
+          <Chat
+            users={users}
+            activeRoom={activeRoom}
+            messageChat={message}
+            handleFlex={handleFlex}
+            flexHead={flexHead}
+          />
+        )}
       </Flex>
       <Flex
         h="93vh"
@@ -44,7 +58,13 @@ const Home = ({ message }) => {
         isAnimated
         style={{ transition: "all 0.2s linear" }}
       >
-        {flexHead.flex2 ? <Info handleFlex={handleFlexInitial} /> : null}
+        {flexHead.flex2 ? (
+          <Info
+            activeRoom={activeRoom}
+            users={users}
+            handleFlex={handleFlexInitial}
+          />
+        ) : null}
       </Flex>
     </Flex>
     // <Grid

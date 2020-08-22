@@ -14,7 +14,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Rooms from "./Rooms";
 import { Scrollbars } from "react-custom-scrollbars";
 
-const Profile = () => {
+const Profile = ({ rooms, handleActiveRoom }) => {
   return (
     <Box w="100%" bg="blue.500">
       <Flex h="8.75vh" w="100%">
@@ -99,6 +99,16 @@ const Profile = () => {
         {" "}
         <Scrollbars style={{ width: "100%", height: "100%" }}>
           {/* <Flex h="78vh" flexDirection="row" w="100%" bg="black"> */}
+          {rooms.map((room, index) => {
+            return (
+              <Rooms
+                room={room}
+                key={index}
+                handleActiveRoom={handleActiveRoom}
+              />
+            );
+          })}
+          {/* <Rooms />
           <Rooms />
           <Rooms />
           <Rooms />
@@ -108,8 +118,7 @@ const Profile = () => {
           <Rooms />
           <Rooms />
           <Rooms />
-          <Rooms />
-          <Rooms />
+          <Rooms /> */}
         </Scrollbars>
         {/* <Rooms /> */}
       </Box>

@@ -13,6 +13,8 @@ import {
   Heading,
   Input,
 } from "@chakra-ui/core";
+import { Picker } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
 import SendIcon from "@material-ui/icons/Send";
 import MicIcon from "@material-ui/icons/Mic";
 import SearchIcon from "@material-ui/icons/Search";
@@ -22,10 +24,28 @@ import UserMessage from "./UserMessage";
 import MyMessage from "./MyMessage";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 
-const Chat = ({ messageChat, handleFlex, flexHead }) => {
+const Chat = ({ messageChat, handleFlex, flexHead, activeRoom, users }) => {
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [inputList, setInputList] = useState(messageChat);
+  const [picker, setPicker] = useState(false);
+
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const handlePicker = () => {
+    setPicker(!picker);
+  };
+  const onEmojiClick = (e) => {
+    let emoji = e.native;
+
+    setInputList(`${inputList}${emoji}`);
+    console.log(inputList);
+    // let sym = e.unified.split("-");
+    // let codesArray = [];
+    // sym.forEach((el) => codesArray.push("0x" + el));
+    // let emoji = String.fromCodePoint(...codesArray);
+    // setInputList(emoji);
+    //
+  };
   //const alanClick = useRef(null);
 
   useEffect(() => {
@@ -62,7 +82,8 @@ const Chat = ({ messageChat, handleFlex, flexHead }) => {
           <div style={{ margin: "auto", clipPath: "circle(45%)" }}>
             <img
               //my="auto"
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              src={activeRoom.urlImage}
+              //src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               width="55px"
               height="55px"
               // inLine
@@ -91,7 +112,7 @@ const Chat = ({ messageChat, handleFlex, flexHead }) => {
                 textAlign: "left",
               }}
             >
-              ROOM NAME
+              {activeRoom.name}
               <br />
               <p
                 style={{
@@ -101,8 +122,17 @@ const Chat = ({ messageChat, handleFlex, flexHead }) => {
                   lineHeight: "30px",
                 }}
               >
-                Participant 1, Participant 2,Participant 3,Paricipant 4,
-                Participant 5, Participant 6
+                {activeRoom.participants.map((userId, index) => {
+                  const comma =
+                    activeRoom.participants.length - 1 === index ? " " : ", ";
+                  let participant = users.find((user) => user.id === userId);
+                  return (
+                    <span>
+                      {participant.name}
+                      {comma}{" "}
+                    </span>
+                  );
+                })}
               </p>
             </div>
             <br />
@@ -157,13 +187,31 @@ const Chat = ({ messageChat, handleFlex, flexHead }) => {
             gap={0}
           >
             {" "}
-            <UserMessage message="hello how are you" />
-            <MyMessage message="I am fine bro" />
-            <UserMessage message="Chal badiya h" />
+            {/* <UserMessage message="hello how are you" />
+            <MyMessage message="I am fine bro" /> */}
+            {/* <UserMessage message="Chal badiya h" />
             <MyMessage message="I am fine bro" />
             <UserMessage message="hn hn pata h" />
             <MyMessage message="chup" />
-            <UserMessage message="tu chup ho jaa bsdk saale smjha wahi aake marnga." />
+            <UserMessage message="tu chup ho jaa bsdk saale smjha wahi aake marnga." /> */}
+            {activeRoom.messages.map((message) => {
+              let participant = users.find(
+                (user) => user.id === message.userId
+              );
+              if (message.userId === "3") {
+                return (
+                  <MyMessage time={message.sentAt} message={message.text} />
+                );
+              } else {
+                return (
+                  <UserMessage
+                    name={participant.name}
+                    time={message.sentAt}
+                    message={message.text}
+                  />
+                );
+              }
+            })}
             {messages.map((message, index) => {
               return <MyMessage message={message} />;
             })}
@@ -174,26 +222,47 @@ const Chat = ({ messageChat, handleFlex, flexHead }) => {
         </Scrollbars>
       </Flex>
 
-      <Flex h="7.25vh" w="100%" bg="gray.100">
+      <Flex position="relative" h="7.25vh" w="100%" bg="gray.100">
         <Flex flex={1}>
-          <InsertEmoticonIcon
-            style={{
-              opacity: "0.5",
-              margin: "auto auto auto 15px",
-              fontSize: "24px",
-              cursor: "pointer",
-            }}
-          />
+          {picker && (
+            <>
+              <Picker
+                showPreview={false}
+                style={{
+                  zIndex: "0",
+                  position: "absolute",
+                  bottom: "0",
+
+                  //height: "53vh",
+                }}
+                onSelect={onEmojiClick}
+              />
+              <Flex flex={1} bg="black" />
+            </>
+          )}
+          <Box w="100%" zIndex={100000} bg="gray.100">
+            <InsertEmoticonIcon
+              onClick={handlePicker}
+              style={{
+                opacity: "0.5",
+                margin: "15px auto auto 15px",
+                fontSize: "24px",
+                cursor: "pointer",
+              }}
+            />
+          </Box>
         </Flex>
-        <Flex flex={15}>
+        <Flex zIndex="1" flex={15}>
           <Box
+            zIndex={100000}
+            bg="gray.100"
             h="100%"
             w="100%"
             justifyContent="center"
             alignItems="center"
-            borderRadius="20px"
           >
             <Input
+              borderRadius="20px"
               h="70%"
               w="95%"
               m="auto"
