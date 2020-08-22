@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Grid, SimpleGrid } from "@chakra-ui/core";
 
-const UserMessage = ({ message }) => {
+const UserMessage = ({ message, time, name }) => {
   return (
     <>
       <Box
@@ -11,16 +11,30 @@ const UserMessage = ({ message }) => {
         display="flex"
         // alignSelf="right"
         // direction="flex-end"
-        maxHeight="200px"
+        //maxHeight="200px"
         borderRadius="10px"
         position="relative"
         padding="0 15px 10px 15px"
         //display="flex-end"
-        maxHeight="100px"
+        //maxHeight="100px"
         margin="15px auto 0px 30px"
         bg="blue.500"
       >
-        <p style={{ marginTop: "5px", textAlign: "left" }}>{message}</p>
+        <p
+          style={{
+            marginTop: "5px",
+            top: "5px",
+            left: "15px",
+            fontWeight: "bold",
+            position: "absolute",
+            fontSize: "14px",
+            textAlign: "left",
+          }}
+        >
+          {name}
+        </p>
+        <br />
+        <p style={{ marginTop: "35px", textAlign: "left" }}>{message}</p>
         <div
           style={{
             fontSize: "12px",
@@ -29,7 +43,8 @@ const UserMessage = ({ message }) => {
             bottom: "5px",
           }}
         >
-          {new Date().getHours()}:{new Date().getMinutes()}
+          {time}
+          {/* {new Date().getHours()}:{new Date().getMinutes()} */}
         </div>
       </Box>
     </>

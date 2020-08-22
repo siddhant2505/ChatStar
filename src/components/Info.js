@@ -7,7 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Scrollbars } from "react-custom-scrollbars";
 
-const Info = ({ handleFlex }) => {
+const Info = ({ handleFlex, activeRoom, users }) => {
   return (
     <Box w="100%" h="93vh" bg="blue.500">
       <Scrollbars style={{ width: "100%", height: "100%" }}>
@@ -50,7 +50,7 @@ const Info = ({ handleFlex }) => {
             <div style={{ margin: "auto", clipPath: "circle(45%)" }}>
               <img
                 //my="auto"
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                src={activeRoom.urlImage}
                 width="150px"
                 height="150px"
                 // inLine
@@ -87,7 +87,7 @@ const Info = ({ handleFlex }) => {
                   margin: "auto 20px ",
                 }}
               >
-                ROOM NAME
+                {activeRoom.name}
                 <br />
                 <p
                   style={{
@@ -123,7 +123,7 @@ const Info = ({ handleFlex }) => {
         <Box width="100%" marginTop="5px" bg="gray.100">
           <Flex flex={1} position="relative" width="100%" h="5vh" bg="gray.100">
             <Text margin="auto 20px " color="green.500">
-              256 Participants
+              {activeRoom.participants.length} Participants
             </Text>
             <SearchIcon
               style={{
@@ -137,12 +137,16 @@ const Info = ({ handleFlex }) => {
               }}
             />
           </Flex>
+          {activeRoom.participants.map((userId) => {
+            let participant = users.find((user) => user.id === userId);
+            return <Participants user={participant} />;
+          })}
+
+          {/* <Participants />
           <Participants />
           <Participants />
           <Participants />
-          <Participants />
-          <Participants />
-          <Participants />
+          <Participants /> */}
         </Box>
         <Box w="100%" h="6vh" bg="white" marginY="5px">
           <Flex flex={1}>

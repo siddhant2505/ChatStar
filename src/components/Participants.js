@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/core";
 import React from "react";
 
-const Participants = () => {
+const Participants = ({ user }) => {
   return (
     <>
       <Flex
@@ -39,18 +39,18 @@ const Participants = () => {
               textAlign: "left",
             }}
           >
-            USER 1
+            {user.name}
             <br />
             <p
               style={{
                 margin: "2px 0px",
                 lineHeight: "30px",
                 opacity: "0.5",
-                width: "90%",
+                width: "100%",
                 textAlign: "left",
               }}
             >
-              Last Seen at 12:00 PM
+              {user.status}
             </p>
           </div>
           <div

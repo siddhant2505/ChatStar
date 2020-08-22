@@ -1,10 +1,14 @@
 import React from "react";
 import { Box, Flex } from "@chakra-ui/core";
 
-const Rooms = () => {
+const Rooms = ({ room, handleActiveRoom }) => {
   return (
     <>
       <Flex
+        onClick={() => {
+          console.log("clicked");
+          handleActiveRoom(room);
+        }}
         position="relative"
         w="100%"
         h="4vw"
@@ -18,7 +22,8 @@ const Rooms = () => {
           <div style={{ margin: "auto", clipPath: "circle(45%)" }}>
             <img
               //my="auto"
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              src={room.urlImage}
+              //src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               width="40px"
               height="40px"
 
@@ -40,19 +45,21 @@ const Rooms = () => {
               textAlign: "left",
             }}
           >
-            ROOM NAME
+            {room.name}
             <br />
             <p
               style={{
-                margin: "2px 0px",
+                margin: "2px 0px 2px 0px",
                 lineHeight: "30px",
                 opacity: "0.5",
-                width: "85%",
+                width: "100%",
+
                 textAlign: "left",
               }}
             >
-              Participant 1, Participant 2, Participant 3,Paricipant 4,
-              Participant 5, Participant 6
+              {room.messages[room.messages.length - 1].text}
+              {/* Participant 1, Participant 2, Participant 3,Paricipant 4,
+              Participant 5, Participant 6 */}
             </p>
           </div>
           <div
@@ -64,7 +71,8 @@ const Rooms = () => {
               opacity: "0.5",
             }}
           >
-            {new Date().getHours()}:{new Date().getMinutes()}
+            {room.messages[room.messages.length - 1].sentAt}
+            {/* {new Date().getHours()}:{new Date().getMinutes()} */}
           </div>
           <div
             style={{
